@@ -1,5 +1,213 @@
 #include "aoc.h"
 
+// input functions
+int slurp_file(const char* file_name)
+{
+    // int open(const char *path, int oflag, ..); 
+    int fd = open(file_name, O_RDONLY);
+    if (fd == -1) {
+        fprintf(stderr, "Could not get file descriptor from %s\n", file_name);
+        close(fd);
+        return 1;
+    }
+    // int fstat(int fildes, struct stat *buf);
+    struct stat statbuf;
+    if (fstat(fd,  &statbuf) == -1) {
+        fprintf(stderr, "Could not stat the file: %s\n", file_name);
+        close(fd);
+        return 1;
+    }
+
+    // ssize_t read(int filedes, void *buf, size_t nbyte);
+    off_t num_bytes = statbuf.st_size;
+    if (num_bytes > BUF_CAP) {
+        fprintf(stderr, "Could not fit input (%lld bytes) into input buffer (%d bytes)\n", num_bytes, BUF_CAP);
+        close(fd);
+        return 1;
+    }
+    read(fd, input, num_bytes);
+    input_sz = (size_t)num_bytes;
+
+    // close the file
+    close(fd);
+    return 0;
+}
+
+void fill_input(const char* input_str)
+{
+    size_t i = 0;
+    size_t input_len = strlen(input_str);
+    snprintf(input, input_len, "%s", input_str);
+    input_sz = input_len;
+}
+
+// standard helpers
+size_t max(size_t a, size_t b)
+{
+    if (a < b) {
+        return b;
+    }
+    return a;
+}
+
+size_t min(size_t a, size_t b)
+{
+    if (a > b) {
+        return b;
+    }
+    return a;
+}
+
+// string view
+void sv_trim_whitespace(StringView *sv)
+{
+    sv_trim_left_whitespace(sv);
+    sv_trim_right_whitespace(sv);
+}
+
+void sv_trim_left_whitespace(StringView *sv)
+{
+    char f = 0;
+    while (sv->buf[f] == ' ' || sv->buf[f] == '\n' || sv->buf[f] == '\t') {
+        f += 1;
+    }
+    sv->buf += f;
+    sv->len -= f;
+}
+
+void sv_trim_right_whitespace(StringView *sv)
+{
+    char f = sv->len-1;
+    while (sv->buf[f] == ' ' || sv->buf[f] == '\n' || sv->buf[f] == '\t') {
+        f -= 1;
+    }
+    sv->len = f+1;
+}
+
+void sv_print(StringView *sv)
+{
+    printf("%.*s", (int)sv->len, sv->buf);
+}
+
+int sv_cmp(StringView *s1, StringView *s2)
+{
+    return bcmp(s1->buf, s2->buf, min(s1->len, s2->len));
+}
+
+
+// splitter
+int lines(Splitter* split)
+{
+    split->st += split->sz;
+    if (split->buf[split->st] == '\n') split->st++;
+    split->sz = 1;
+    while (split->st+split->sz < split->mx) {
+        split->sz++;
+        if (split->buf[split->st+split->sz] == '\n') {
+            break;
+        }
+    }
+    return split->st < split->mx;
+}
+
+int delim(Splitter* split, char c)
+{
+    split->st += split->sz;
+    if (split->buf[split->st] == c) split->st++;
+    split->sz = 1;
+    while (split->st+split->sz < split->mx) {
+        split->sz++;
+        if (split->buf[split->st+split->sz] == c) {
+            break;
+        }
+    }
+    return split->st < split->mx;
+}
+
+void split_curr(Splitter *split, StringView *res)
+{
+    res->buf = &split->buf[split->st];
+    res->len = split->sz;
+}
+
+// map
+
+Map* Map_new(int (*k_cmp)(Key*, Key*))
+{
+    Map* new = (Map*) malloc(sizeof(Map));
+    if (!new) {
+        printf("ERROR! could not initialize map!");
+        exit(1);
+    }
+    new->size = 0;
+    new->cap = 0;
+    new->entries = NULL;
+    new->cmp_keys = k_cmp;
+    return new;
+}
+
+void Map_insert(Map* map, Key* k, void* v)
+{
+    if (map->cap == 0) {
+        map->cap = 1;
+        map->entries = (Entry*) malloc(map->cap * sizeof(Entry));
+        if (!map->entries) {
+            exit(1);
+        }
+        Entry entry = { k, v };
+        map->entries[map->size++] = entry;
+        return;
+    }
+    for (size_t i = 0; i < map->size; ++i) {
+        if (map->cmp_keys(map->entries[i].key, k) == 0) {
+            map->entries[i].value = v;
+            return;
+        }
+    }
+    if (map->size == map->cap) {
+        map->cap *= 2;
+        Entry* newMem = (Entry*) realloc(map->entries, map->cap * sizeof(Entry));
+        if (!newMem) {
+            printf("ERROR: Could not increase the size of the map");
+            exit(1);
+        }
+        map->entries = newMem;
+    }
+    Entry entry = { k, v };
+    map->entries[map->size++] = entry;
+}
+
+void* Map_get(Map* map, Key* q_key)
+{
+    for (size_t i = 0; i < map->size; ++i) {
+        if (map->cmp_keys((void*)map->entries[i].key, q_key) == 0) {
+            return map->entries[i].value;
+        }
+    }
+    return NULL;
+}
+
+int Map_contains(Map* map, Key* q_key)
+{
+    for (size_t i = 0; i < map->size; ++i) {
+        if (map->cmp_keys((void*)map->entries[i].key, q_key) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+size_t Map_size(Map* map)
+{
+    return map->size;
+}
+
+void Map_free(Map* map)
+{
+    free(map->entries);
+    free(map);
+}
+
 // vector
 
 Vector_i* Vector_i_new() {

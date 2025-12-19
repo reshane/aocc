@@ -1,5 +1,7 @@
 set -e
+
 gcc -c ./src/lib/aoc.c -o ./build/aoc.o
 ar rcs ./build/libaoc.a ./build/aoc.o
-gcc ./src/test.c -L./build -laoc -o ./build/test
-gcc ./src/main.c -L./build -laoc -o ./build/main
+
+gcc ./src/*.c -DTESTING -L./build -laoc -o ./build/test
+gcc ./src/*.c -L./build -laoc -O3 -o ./build/main
