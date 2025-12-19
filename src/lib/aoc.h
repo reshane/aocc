@@ -42,6 +42,8 @@ typedef struct string_view {
 void sv_trim_whitespace(StringView *sv);
 void sv_trim_left_whitespace(StringView *sv);
 void sv_trim_right_whitespace(StringView *sv);
+int sv_atoi(StringView *sv);
+long long sv_atoll(StringView *sv);
 void sv_print(StringView *sv);
 int sv_cmp(StringView *s1, StringView *s2);
 

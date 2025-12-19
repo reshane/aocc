@@ -37,7 +37,7 @@ void fill_input(const char* input_str)
 {
     size_t i = 0;
     size_t input_len = strlen(input_str);
-    snprintf(input, input_len, "%s", input_str);
+    snprintf(input, input_len+1, "%s", input_str);
     input_sz = input_len;
 }
 
@@ -67,7 +67,7 @@ void sv_trim_whitespace(StringView *sv)
 
 void sv_trim_left_whitespace(StringView *sv)
 {
-    char f = 0;
+    size_t f = 0;
     while (sv->buf[f] == ' ' || sv->buf[f] == '\n' || sv->buf[f] == '\t') {
         f += 1;
     }
@@ -77,11 +77,27 @@ void sv_trim_left_whitespace(StringView *sv)
 
 void sv_trim_right_whitespace(StringView *sv)
 {
-    char f = sv->len-1;
+    size_t f = sv->len-1;
     while (sv->buf[f] == ' ' || sv->buf[f] == '\n' || sv->buf[f] == '\t') {
         f -= 1;
     }
     sv->len = f+1;
+}
+
+int sv_atoi(StringView *sv)
+{
+    if (sv->len > 64) return 0;
+    char buf[64];
+    snprintf(buf, (int)sv->len+1, "%.*s", (int)sv->len, sv->buf);
+    return atoi(buf);
+}
+
+long long sv_atoll(StringView *sv)
+{
+    if (sv->len > 64) return 0;
+    char buf[64];
+    snprintf(buf, (int)sv->len+1, "%.*s", (int)sv->len, sv->buf);
+    return atol(buf);
 }
 
 void sv_print(StringView *sv)
@@ -91,6 +107,7 @@ void sv_print(StringView *sv)
 
 int sv_cmp(StringView *s1, StringView *s2)
 {
+    // printf("%d\n", min(s1->len, s2->len));
     return bcmp(s1->buf, s2->buf, min(s1->len, s2->len));
 }
 
@@ -101,7 +118,7 @@ int lines(Splitter* split)
     split->st += split->sz;
     if (split->buf[split->st] == '\n') split->st++;
     split->sz = 1;
-    while (split->st+split->sz < split->mx) {
+    while (split->st+split->sz <= split->mx) {
         split->sz++;
         if (split->buf[split->st+split->sz] == '\n') {
             break;
@@ -115,7 +132,7 @@ int delim(Splitter* split, char c)
     split->st += split->sz;
     if (split->buf[split->st] == c) split->st++;
     split->sz = 1;
-    while (split->st+split->sz < split->mx) {
+    while (split->st+split->sz <= split->mx) {
         split->sz++;
         if (split->buf[split->st+split->sz] == c) {
             break;

@@ -1,7 +1,7 @@
 #include "lib/aoc.h"
 
 // day 1
-int d1_solve_p1()
+long long d1_solve_p1()
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -32,7 +32,7 @@ int d1_solve_p1()
     return res;
 }
 
-int d1_solve_p2()
+long long d1_solve_p2()
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -81,8 +81,8 @@ void solve_day1(const char* in_file)
     if (slurp_file(in_file) != 0) {
         return;
     }
-    printf("part 1: %d\n", d1_solve_p1());
-    printf("part 2: %d\n", d1_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d1_solve_p1());
+    printf("\033[1mPart 2: %lld\n\033[0m", d1_solve_p2());
 }
 
 #ifdef TESTING

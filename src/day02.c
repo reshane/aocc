@@ -1,21 +1,5 @@
 #include "lib/aoc.h"
 
-int sv_atoi(StringView *sv)
-{
-    if (sv->len > 64) return 0;
-    char buf[64];
-    snprintf(buf, (int)sv->len+1, "%.*s", (int)sv->len, sv->buf);
-    return atoi(buf);
-}
-
-long long sv_atoll(StringView *sv)
-{
-    if (sv->len > 64) return 0;
-    char buf[64];
-    snprintf(buf, (int)sv->len+1, "%.*s", (int)sv->len, sv->buf);
-    return atol(buf);
-}
-
 int is_invalid(StringView *sv)
 {
     if (sv->len % 2 != 0) return 1;
@@ -131,8 +115,8 @@ void solve_day2(const char* in_file)
     if (slurp_file(in_file) != 0) {
         return;
     }
-    printf("part 1: %lld\n", d2_solve_p1());
-    printf("part 2: %lld\n", d2_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d2_solve_p1());
+    printf("\033[1mPart 2: %lld\n\033[0m", d2_solve_p2());
 }
 
 #ifdef TESTING
@@ -181,7 +165,7 @@ TEST(test_day2_is_invalid) {
     sprintf(buf, "%lld", t);
     StringView sv1 = {.buf = buf, .len = strlen(buf) };
     long res = is_invalid_2(&sv1);
-    printf("%ld\n", res);
+    // printf("%ld\n", res);
     ASSERT(res != 0);
 
     t = 565650;
@@ -189,7 +173,7 @@ TEST(test_day2_is_invalid) {
     sv1.buf = buf;
     sv1.len = strlen(buf);
     res = is_invalid_2(&sv1);
-    printf("%ld\n", res);
+    // printf("%ld\n", res);
     ASSERT(res != 0);
 
     t = 565656;
@@ -197,7 +181,7 @@ TEST(test_day2_is_invalid) {
     sv1.buf = buf;
     sv1.len = strlen(buf);
     res = is_invalid_2(&sv1);
-    printf("%ld\n", res);
+    // printf("%ld\n", res);
     ASSERT(res == 0);
 }
 
