@@ -1,6 +1,6 @@
 #include "lib/aoc.h"
 
-void parse_input(StringView* lns, int* ct)
+void d3_parse_input(StringView* lns, int* ct)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     while (lines(&split)) {
@@ -14,7 +14,7 @@ long long d3_solve_p1()
 {
     StringView lines[200] = {0};
     int ct = 0;
-    parse_input((StringView*)&lines, &ct);
+    d3_parse_input((StringView*)&lines, &ct);
     long long total = 0;
     for (int b = 0; b < ct; ++b) {
         int line_len = lines[b].len;
@@ -39,7 +39,7 @@ long long d3_solve_p1()
     return total;
 }
 
-int digits(int d)
+int d3_digits(int d)
 {
     int digs = 0;
     while (d > 0) {
@@ -49,14 +49,14 @@ int digits(int d)
     return digs;
 }
 
-long long get_max(StringView* bank)
+long long d3_get_max(StringView* bank)
 {
     long long m[256][13] = {0};
     for (int i = 1; i <= bank->len; ++i) {
         int q = bank->buf[i-1]-48;
         for (int j = 1; j <= 12; ++j) {
             long long added = m[i][j-1] * 10 + q;
-            if (digits(added) > j) {
+            if (d3_digits(added) > j) {
                 m[i][j] = m[i-1][j];
             } else {
                 long long a = m[i-1][j];
@@ -78,12 +78,12 @@ long long d3_solve_p2()
     // knapsack problem
     StringView banks[200] = {0};
     int ct = 0;
-    parse_input((StringView*)&banks, &ct);
+    d3_parse_input((StringView*)&banks, &ct);
     // printf("%d\n", ct);
     for (int b = 0; b < ct; ++b) {
         sv_trim_whitespace(&banks[b]);
         // printf("%d", b);
-        total += get_max(&banks[b]);
+        total += d3_get_max(&banks[b]);
     }
     return total;
 }
@@ -106,8 +106,8 @@ TEST(test_day3_part1) {
         "234234234234278\n"
         "818181911112111\n";
     fill_input(input_str);
-    int result = d3_solve_p1();
-    // printf("%d\n", result);
+    long long result = d3_solve_p1();
+    // printf("%lld\n", result);
     ASSERT(result == 357)
 }
 

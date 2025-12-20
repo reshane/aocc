@@ -127,8 +127,8 @@ TEST(test_day2_part1) {
         "1698522-1698528,446443-446449,38593856-38593862,565653-565659,\n"
         "824824821-824824827,2121212118-2121212124\n";
     fill_input(input_str);
-    int result = d2_solve_p1();
-    // printf("%d\n", result);
+    long long result = d2_solve_p1();
+    // printf("%lld\n", result);
     ASSERT(result == 1227775554)
 }
 

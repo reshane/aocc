@@ -2,15 +2,18 @@
 void solve_day1(const char* in_file);
 void solve_day2(const char* in_file);
 void solve_day3(const char* in_file);
+void solve_day4(const char* in_file);
 
 #ifdef TESTING
 void day01_tests();
 void day02_tests();
 void day03_tests();
+void day04_tests();
 void run_tests()
 {
     day01_tests();
     day02_tests();
     day03_tests();
+    day04_tests();
 }
 #endif
