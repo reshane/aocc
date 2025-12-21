@@ -15,16 +15,16 @@ Point parse_range(StringView* rng)
 }
 
 // day 5
-long long d5_solve_p1()
+long long d5_solve_p1(char* input, size_t input_sz)
 {
     const int lines_max = 1500;
-    StringView lns[lines_max] = {0};
+    StringView lns[1500] = {0};
     int ct = 0;
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     int parsing_ranges = 1;
 
     const int max_ranges = 179;
-    Point ranges[max_ranges] = {0};
+    Point ranges[179] = {0};
     int r_ct = 0;
 
     while (lines(&split) && parsing_ranges) {
@@ -65,16 +65,16 @@ int comp_pt_x(const void *a, const void *b)
     return 1;
 }
 
-long long d5_solve_p2()
+long long d5_solve_p2(char* input, size_t input_sz)
 {
     const int lines_max = 200;
-    StringView lns[lines_max] = {0};
+    StringView lns[200] = {0};
     int ct = 0;
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     int parsing_ranges = 1;
 
     const int max_ranges = 179;
-    Point ranges[max_ranges] = {0};
+    Point ranges[179] = {0};
     int r_ct = 0;
 
     while (lines(&split) && parsing_ranges) {
@@ -114,11 +114,13 @@ long long d5_solve_p2()
 
 void solve_day5(const char* in_file)
 {
-    if (slurp_file(in_file) != 0) {
+    char input[BUF_CAP];
+    size_t input_sz;
+    if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
         return;
     }
-    printf("\033[1mPart 1: %lld\n\033[0m", d5_solve_p1());
-    printf("\033[1mPart 2: %lld\n\033[0m", d5_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d5_solve_p1(input, input_sz));
+    printf("\033[1mPart 2: %lld\n\033[0m", d5_solve_p2(input, input_sz));
 }
 
 #ifdef TESTING
@@ -136,8 +138,8 @@ TEST(test_day5_part1) {
         "11\n"
         "17\n"
         "32\n";
-    fill_input(input_str);
-    long long result = d5_solve_p1();
+    // aoc_fill_input(input_str);
+    long long result = d5_solve_p1(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 3)
 }
@@ -154,8 +156,8 @@ TEST(test_day5_part2) {
         "11\n"
         "17\n"
         "32\n";
-    fill_input(input_str);
-    long long result = d5_solve_p2();
+    // aoc_fill_input(input_str);
+    long long result = d5_solve_p2(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 14)
 }

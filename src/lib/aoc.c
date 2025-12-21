@@ -1,7 +1,7 @@
 #include "aoc.h"
 
 // input functions
-int slurp_file(const char* file_name)
+int aoc_slurp_file(const char* file_name, char* input, size_t* input_sz)
 {
     // int open(const char *path, int oflag, ..); 
     int fd = open(file_name, O_RDONLY);
@@ -26,14 +26,14 @@ int slurp_file(const char* file_name)
         return 1;
     }
     read(fd, input, num_bytes);
-    input_sz = (size_t)num_bytes;
+    *input_sz = (size_t)num_bytes;
 
     // close the file
     close(fd);
     return 0;
 }
 
-void fill_input(const char* input_str)
+void aoc_fill_input(const char* input_str, char* input, size_t* input_sz)
 {
     size_t i = 0;
     size_t input_len = strlen(input_str);
@@ -42,7 +42,7 @@ void fill_input(const char* input_str)
         return;
     }
     snprintf(input, input_len+1, "%s", input_str);
-    input_sz = input_len;
+    *input_sz = input_len;
 }
 
 // standard helpers

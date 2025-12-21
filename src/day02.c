@@ -15,7 +15,7 @@ int is_invalid(StringView *sv)
 }
 
 // day 2
-long long d2_solve_p1()
+long long d2_solve_p1(char* input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -75,7 +75,7 @@ int is_invalid_2(StringView *sv)
     return 1;
 }
 
-long long d2_solve_p2()
+long long d2_solve_p2(char* input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -112,11 +112,13 @@ long long d2_solve_p2()
 
 void solve_day2(const char* in_file)
 {
-    if (slurp_file(in_file) != 0) {
+    char input[BUF_CAP];
+    size_t input_sz;
+    if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
         return;
     }
-    printf("\033[1mPart 1: %lld\n\033[0m", d2_solve_p1());
-    printf("\033[1mPart 2: %lld\n\033[0m", d2_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d2_solve_p1(input, input_sz));
+    printf("\033[1mPart 2: %lld\n\033[0m", d2_solve_p2(input, input_sz));
 }
 
 #ifdef TESTING
@@ -126,8 +128,8 @@ TEST(test_day2_part1) {
     char *input_str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
         "1698522-1698528,446443-446449,38593856-38593862,565653-565659,\n"
         "824824821-824824827,2121212118-2121212124\n";
-    fill_input(input_str);
-    long long result = d2_solve_p1();
+    // fill_input(input_str);
+    long long result = d2_solve_p1(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 1227775554)
 }
@@ -189,8 +191,8 @@ TEST(test_day2_part2) {
     char *input_str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
         "1698522-1698528,446443-446449,38593856-38593862,565653-565659,\n"
         "824824821-824824827,2121212118-2121212124\n";
-    fill_input(input_str);
-    long long result = d2_solve_p2();
+    // fill_input(input_str);
+    long long result = d2_solve_p2(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 4174379265)
 }

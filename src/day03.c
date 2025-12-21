@@ -1,6 +1,6 @@
 #include "lib/aoc.h"
 
-void d3_parse_input(StringView* lns, int* ct)
+void d3_parse_input(StringView* lns, int* ct, char* input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     while (lines(&split)) {
@@ -10,11 +10,11 @@ void d3_parse_input(StringView* lns, int* ct)
 }
 
 // day 3
-long long d3_solve_p1()
+long long d3_solve_p1(char* input, size_t input_sz)
 {
     StringView lines[200] = {0};
     int ct = 0;
-    d3_parse_input((StringView*)&lines, &ct);
+    d3_parse_input((StringView*)&lines, &ct, input, input_sz);
     long long total = 0;
     for (int b = 0; b < ct; ++b) {
         int line_len = lines[b].len;
@@ -72,13 +72,13 @@ long long d3_get_max(StringView* bank)
     return m[bank->len][12];
 }
 
-long long d3_solve_p2()
+long long d3_solve_p2(char* input, size_t input_sz)
 {
     long long total = 0;
     // knapsack problem
     StringView banks[200] = {0};
     int ct = 0;
-    d3_parse_input((StringView*)&banks, &ct);
+    d3_parse_input((StringView*)&banks, &ct, input, input_sz);
     // printf("%d\n", ct);
     for (int b = 0; b < ct; ++b) {
         sv_trim_whitespace(&banks[b]);
@@ -90,11 +90,13 @@ long long d3_solve_p2()
 
 void solve_day3(const char* in_file)
 {
-    if (slurp_file(in_file) != 0) {
+    char input[BUF_CAP];
+    size_t input_sz;
+    if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
         return;
     }
-    printf("\033[1mPart 1: %lld\n\033[0m", d3_solve_p1());
-    printf("\033[1mPart 2: %lld\n\033[0m", d3_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d3_solve_p1(input, input_sz));
+    printf("\033[1mPart 2: %lld\n\033[0m", d3_solve_p2(input, input_sz));
 }
 
 #ifdef TESTING
@@ -105,8 +107,8 @@ TEST(test_day3_part1) {
         "811111111111119\n"
         "234234234234278\n"
         "818181911112111\n";
-    fill_input(input_str);
-    long long result = d3_solve_p1();
+    // fill_input(input_str);
+    long long result = d3_solve_p1(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 357)
 }
@@ -116,8 +118,8 @@ TEST(test_day3_part2) {
         "811111111111119\n"
         "234234234234278\n"
         "818181911112111\n";
-    fill_input(input_str);
-    long long result = d3_solve_p2();
+    // fill_input(input_str);
+    long long result = d3_solve_p2(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 3121910778619)
     // ASSERT(result == 1)

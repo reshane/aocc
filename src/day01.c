@@ -1,7 +1,7 @@
 #include "lib/aoc.h"
 
 // day 1
-long long d1_solve_p1()
+long long d1_solve_p1(char* input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -32,7 +32,7 @@ long long d1_solve_p1()
     return res;
 }
 
-long long d1_solve_p2()
+long long d1_solve_p2(char* input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -78,11 +78,13 @@ long long d1_solve_p2()
 
 void solve_day1(const char* in_file)
 {
-    if (slurp_file(in_file) != 0) {
+    char input[BUF_CAP];
+    size_t input_sz;
+    if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
         return;
     }
-    printf("\033[1mPart 1: %lld\n\033[0m", d1_solve_p1());
-    printf("\033[1mPart 2: %lld\n\033[0m", d1_solve_p2());
+    printf("\033[1mPart 1: %lld\n\033[0m", d1_solve_p1(input, input_sz));
+    printf("\033[1mPart 2: %lld\n\033[0m", d1_solve_p2(input, input_sz));
 }
 
 #ifdef TESTING
@@ -99,8 +101,8 @@ TEST(test_day1_part1) {
         "L99\n"
         "R14\n"
         "L82\n";
-    fill_input(input_str);
-    ASSERT(d1_solve_p1() == 3)
+    // fill_input(input_str);
+    ASSERT(d1_solve_p1(input_str, strlen(input_str)) == 3)
 }
 
 TEST(test_day1_part2) {
@@ -114,8 +116,8 @@ TEST(test_day1_part2) {
         "L99\n"
         "R14\n"
         "L82\n";
-    fill_input(input_str);
-    ASSERT(d1_solve_p2() == 6)
+    // aoc_fill_input(input_str);
+    ASSERT(d1_solve_p2(input_str, strlen(input_str)) == 6)
 }
 
 void day01_tests()

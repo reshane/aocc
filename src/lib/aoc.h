@@ -25,10 +25,9 @@
 #ifndef BUF_CAP
 #define BUF_CAP 1<<16
 #endif
-char input[BUF_CAP];
-size_t input_sz;
-int slurp_file(const char* file_name);
-void fill_input(const char* contents);
+
+int aoc_slurp_file(const char* file_name, char* input, size_t* input_sz);
+void aoc_fill_input(const char* input_str, char* input, size_t* input_sz);
 
 // standard helpers
 size_t max(size_t a, size_t b);
