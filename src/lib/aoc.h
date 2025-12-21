@@ -59,6 +59,12 @@ int lines(Splitter* split);
 int delim(Splitter* split, char c);
 void split_curr(Splitter *split, StringView *res);
 
+// point
+typedef struct point {
+    long long x;
+    long long y;
+} Point;
+
 // map
 typedef struct Key {
     void* data;

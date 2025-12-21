@@ -37,6 +37,10 @@ void fill_input(const char* input_str)
 {
     size_t i = 0;
     size_t input_len = strlen(input_str);
+    if (input_len > BUF_CAP) {
+        fprintf(stderr, "Could not fit input (%zu bytes) into input buffer (%d bytes)\n", input_len, BUF_CAP);
+        return;
+    }
     snprintf(input, input_len+1, "%s", input_str);
     input_sz = input_len;
 }
@@ -117,12 +121,9 @@ int lines(Splitter* split)
 {
     split->st += split->sz;
     if (split->buf[split->st] == '\n') split->st++;
-    split->sz = 1;
-    while (split->st+split->sz <= split->mx) {
+    split->sz = 0;
+    while (split->st+split->sz <= split->mx && split->buf[split->st+split->sz] != '\n') {
         split->sz++;
-        if (split->buf[split->st+split->sz] == '\n') {
-            break;
-        }
     }
     return split->st < split->mx;
 }
@@ -131,12 +132,9 @@ int delim(Splitter* split, char c)
 {
     split->st += split->sz;
     if (split->buf[split->st] == c) split->st++;
-    split->sz = 1;
-    while (split->st+split->sz <= split->mx) {
+    split->sz = 0;
+    while (split->st+split->sz <= split->mx && split->buf[split->st+split->sz] != c) {
         split->sz++;
-        if (split->buf[split->st+split->sz] == c) {
-            break;
-        }
     }
     return split->st < split->mx;
 }
@@ -148,7 +146,6 @@ void split_curr(Splitter *split, StringView *res)
 }
 
 // map
-
 Map* Map_new(int (*k_cmp)(Key*, Key*))
 {
     Map* new = (Map*) malloc(sizeof(Map));

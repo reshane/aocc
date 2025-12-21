@@ -1,10 +1,5 @@
 #include "lib/aoc.h"
 
-typedef struct point {
-    int x;
-    int y;
-} Point;
-
 StringView d4_lines[200] = {0};
 int d4_ct = 0;
 
