@@ -5,6 +5,7 @@ void solve_day3(const char* in_file);
 void solve_day4(const char* in_file);
 void solve_day5(const char* in_file);
 void solve_day6(const char* in_file);
+void solve_day7(const char* in_file);
 
 #ifdef TESTING
 void day01_tests();
@@ -13,6 +14,7 @@ void day03_tests();
 void day04_tests();
 void day05_tests();
 void day06_tests();
+void day07_tests();
 
 void run_tests()
 {
@@ -22,5 +24,6 @@ void run_tests()
     day04_tests();
     day05_tests();
     day06_tests();
+    day07_tests();
 }
 #endif
