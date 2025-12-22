@@ -2,28 +2,31 @@
 #include "lib/aoc.h"
 #include "days.h"
 
-const char* in_files[5] = {
+const char* in_files[6] = {
     "./inputs/01.txt",
     "./inputs/02.txt",
     "./inputs/03.txt",
     "./inputs/04.txt",
-    "./inputs/05.txt"
+    "./inputs/05.txt",
+    "./inputs/06.txt",
 };
-void (*solutions[5])(const char*) = {
+void (*solutions[6])(const char*) = {
     solve_day1,
     solve_day2,
     solve_day3,
     solve_day4,
     solve_day5,
+    solve_day6,
 };
 
 #ifdef TESTING
-void (*tests[5])() = {
+void (*tests[6])() = {
     day01_tests,
     day02_tests,
     day03_tests,
     day04_tests,
     day05_tests,
+    day06_tests,
 };
 
 int main(int argc, char** argv)
