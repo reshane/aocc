@@ -1,5 +1,9 @@
 set -e
 
+if [ ! -d "./build" ]; then
+    mkdir -p ./build
+fi
+
 gcc -c ./src/lib/aoc.c -o ./build/aoc.o
 ar rcs ./build/libaoc.a ./build/aoc.o
 
