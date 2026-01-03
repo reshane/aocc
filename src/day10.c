@@ -40,7 +40,7 @@ qframe qpop(d10queue *q)
 void print_bits(uint64_t a)
 {
     for (int sh = 63; sh > -1; --sh) {
-        printf("%llu", ((1<<sh)&a)>>sh);
+        printf("%"PRIu64, ((1<<sh)&a)>>sh);
     }
     printf("\n");
 }

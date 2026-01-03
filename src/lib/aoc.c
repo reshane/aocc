@@ -21,7 +21,7 @@ int aoc_slurp_file(const char* file_name, char* input, size_t* input_sz)
     // ssize_t read(int filedes, void *buf, size_t nbyte);
     off_t num_bytes = statbuf.st_size;
     if (num_bytes > BUF_CAP) {
-        fprintf(stderr, "Could not fit input (%lld bytes) into input buffer (%d bytes)\n", num_bytes, BUF_CAP);
+        fprintf(stderr, "Could not fit input (%"PRIu64" bytes) into input buffer (%d bytes)\n", (uint64_t)num_bytes, BUF_CAP);
         close(fd);
         return 1;
     }
