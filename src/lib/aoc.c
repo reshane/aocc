@@ -35,7 +35,6 @@ int aoc_slurp_file(const char* file_name, char* input, size_t* input_sz)
 
 void aoc_fill_input(const char* input_str, char* input, size_t* input_sz)
 {
-    size_t i = 0;
     size_t input_len = strlen(input_str);
     if (input_len > BUF_CAP) {
         fprintf(stderr, "Could not fit input (%zu bytes) into input buffer (%d bytes)\n", input_len, BUF_CAP);

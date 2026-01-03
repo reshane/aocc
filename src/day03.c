@@ -52,7 +52,7 @@ int d3_digits(int d)
 long long d3_get_max(StringView *bank)
 {
     long long m[256][13] = {0};
-    for (int i = 1; i <= bank->len; ++i) {
+    for (size_t i = 1; i <= bank->len; ++i) {
         int q = bank->buf[i-1]-48;
         for (int j = 1; j <= 12; ++j) {
             long long added = m[i][j-1] * 10 + q;

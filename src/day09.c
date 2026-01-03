@@ -23,7 +23,6 @@ long long d9_solve_p1(char *input, size_t input_sz)
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
     Point pts[D9_MAX_LNS];
-    size_t ptc = 0;
     long long max = 0;
     while (lines(&split)) {
         assert("lns ran out of space!" && lns_ct < D9_MAX_LNS);
@@ -81,7 +80,6 @@ long long d9_solve_p2(char *input, size_t input_sz)
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
     static Point pts[D9_MAX_LNS];
-    size_t ptc = 0;
     static Point perim[D9_MAX_LNS*D9_MAX_LNS];
     size_t perimct = 0;
     static p9e areas[D9_MAX_LNS*D9_MAX_LNS];
@@ -119,7 +117,6 @@ long long d9_solve_p2(char *input, size_t input_sz)
 
     qsort((void*)&areas, areas_ct, sizeof areas[0], &comp_area);
 
-    long long total = 0;
     for (size_t idx = 0; idx < areas_ct; ++idx) {
         p9e t = areas[idx];
         int valid = 1;

@@ -71,7 +71,7 @@ long long d7_solve_p2(char *input, size_t input_sz)
         }
     }
     long long total = 0;
-    for (int idx = 0; idx < lns[lns_ct-2].len; ++idx) {
+    for (size_t idx = 0; idx < lns[lns_ct-2].len; ++idx) {
         if (weights[lns_ct-2][idx] > 0) {
             total += weights[lns_ct-2][idx];
         }
