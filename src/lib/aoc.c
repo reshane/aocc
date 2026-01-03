@@ -115,7 +115,6 @@ int sv_cmp(StringView *s1, StringView *s2)
     return bcmp(s1->buf, s2->buf, min(s1->len, s2->len));
 }
 
-
 // splitter
 int lines(Splitter* split)
 {

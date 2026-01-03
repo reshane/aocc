@@ -3,7 +3,7 @@
 #define D7_MAX_LNS 256
 
 // day 7
-long long d7_solve_p1(char* input, size_t input_sz)
+long long d7_solve_p1(char *input, size_t input_sz)
 {
     StringView lns[D7_MAX_LNS];
     size_t lns_ct = 0;
@@ -33,7 +33,7 @@ long long d7_solve_p1(char* input, size_t input_sz)
     return total;
 }
 
-long long d7_solve_p2(char* input, size_t input_sz)
+long long d7_solve_p2(char *input, size_t input_sz)
 {
     long long weights[D7_MAX_LNS][D7_MAX_LNS];
     StringView lns[D7_MAX_LNS];
@@ -79,7 +79,7 @@ long long d7_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day7(const char* in_file)
+void solve_day7(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

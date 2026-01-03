@@ -1,6 +1,6 @@
 #include "lib/aoc.h"
 
-void d3_parse_input(StringView* lns, int* ct, char* input, size_t input_sz)
+void d3_parse_input(StringView *lns, int *ct, char *input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     while (lines(&split)) {
@@ -10,7 +10,7 @@ void d3_parse_input(StringView* lns, int* ct, char* input, size_t input_sz)
 }
 
 // day 3
-long long d3_solve_p1(char* input, size_t input_sz)
+long long d3_solve_p1(char *input, size_t input_sz)
 {
     StringView lines[200] = {0};
     int ct = 0;
@@ -49,7 +49,7 @@ int d3_digits(int d)
     return digs;
 }
 
-long long d3_get_max(StringView* bank)
+long long d3_get_max(StringView *bank)
 {
     long long m[256][13] = {0};
     for (int i = 1; i <= bank->len; ++i) {
@@ -72,7 +72,7 @@ long long d3_get_max(StringView* bank)
     return m[bank->len][12];
 }
 
-long long d3_solve_p2(char* input, size_t input_sz)
+long long d3_solve_p2(char *input, size_t input_sz)
 {
     long long total = 0;
     // knapsack problem

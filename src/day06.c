@@ -3,7 +3,7 @@
 #define D6_MAX_ARGS 1024
 
 // day 6
-long long d6_solve_p1(char* input, size_t input_sz)
+long long d6_solve_p1(char *input, size_t input_sz)
 {
     StringView lns[5] = {0};
     int lns_ct = 0;
@@ -57,7 +57,7 @@ long long d6_solve_p1(char* input, size_t input_sz)
     return total;
 }
 
-long long d6_solve_p2(char* input, size_t input_sz)
+long long d6_solve_p2(char *input, size_t input_sz)
 {
     StringView lns[5] = {0};
     int lns_ct = 0;
@@ -107,7 +107,7 @@ long long d6_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day6(const char* in_file)
+void solve_day6(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

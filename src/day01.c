@@ -1,7 +1,7 @@
 #include "lib/aoc.h"
 
 // day 1
-long long d1_solve_p1(char* input, size_t input_sz)
+long long d1_solve_p1(char *input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -32,7 +32,7 @@ long long d1_solve_p1(char* input, size_t input_sz)
     return res;
 }
 
-long long d1_solve_p2(char* input, size_t input_sz)
+long long d1_solve_p2(char *input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -76,7 +76,7 @@ long long d1_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day1(const char* in_file)
+void solve_day1(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

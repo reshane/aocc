@@ -21,7 +21,7 @@ long long p38_dist(p38* p1, p38* p2)
     return dx*dx+dy*dy+dz*dz;
 }
 
-int comp_p8e(const void* p1, const void* p2)
+int comp_p8e(const void *p1, const void *p2)
 {
     p8e* a = (p8e*)p1;
     p8e* b = (p8e*)p2;
@@ -33,7 +33,7 @@ int comp_p8e(const void* p1, const void* p2)
     return -1;
 }
 
-int comp_szt(const void* sz1, const void* sz2)
+int comp_szt(const void *sz1, const void *sz2)
 {
     size_t a,b;
     a = *(size_t*)sz1;
@@ -48,7 +48,7 @@ int comp_szt(const void* sz1, const void* sz2)
 
 
 // day 8
-long long d8p1_solver(char* input, size_t input_sz, size_t iterations)
+long long d8p1_solver(char *input, size_t input_sz, size_t iterations)
 {
     static StringView lns[D8_MAX_LNS];
     size_t lns_ct = 0;
@@ -139,12 +139,12 @@ long long d8p1_solver(char* input, size_t input_sz, size_t iterations)
     return total;
 }
 
-long long d8_solve_p1(char* input, size_t input_sz)
+long long d8_solve_p1(char *input, size_t input_sz)
 {
     return d8p1_solver(input, input_sz, 1000);
 }
 
-long long d8_solve_p2(char* input, size_t input_sz)
+long long d8_solve_p2(char *input, size_t input_sz)
 {
     static StringView lns[D8_MAX_LNS];
     size_t lns_ct = 0;
@@ -240,7 +240,7 @@ long long d8_solve_p2(char* input, size_t input_sz)
     return -1;
 }
 
-void solve_day8(const char* in_file)
+void solve_day8(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

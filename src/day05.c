@@ -1,6 +1,6 @@
 #include "lib/aoc.h"
 
-Point parse_range(StringView* rng)
+Point parse_range(StringView *rng)
 {
     Splitter split = {.buf = rng->buf, .st = 0, .sz = 0, .mx = rng->len};
     StringView start_str = {0};
@@ -15,7 +15,7 @@ Point parse_range(StringView* rng)
 }
 
 // day 5
-long long d5_solve_p1(char* input, size_t input_sz)
+long long d5_solve_p1(char *input, size_t input_sz)
 {
     const int lines_max = 1500;
     StringView lns[1500] = {0};
@@ -65,7 +65,7 @@ int comp_pt_x(const void *a, const void *b)
     return 1;
 }
 
-long long d5_solve_p2(char* input, size_t input_sz)
+long long d5_solve_p2(char *input, size_t input_sz)
 {
     const int lines_max = 200;
     StringView lns[200] = {0};
@@ -112,7 +112,7 @@ long long d5_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day5(const char* in_file)
+void solve_day5(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

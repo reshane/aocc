@@ -15,7 +15,7 @@ int is_invalid(StringView *sv)
 }
 
 // day 2
-long long d2_solve_p1(char* input, size_t input_sz)
+long long d2_solve_p1(char *input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -75,7 +75,7 @@ int is_invalid_2(StringView *sv)
     return 1;
 }
 
-long long d2_solve_p2(char* input, size_t input_sz)
+long long d2_solve_p2(char *input, size_t input_sz)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
@@ -110,7 +110,7 @@ long long d2_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day2(const char* in_file)
+void solve_day2(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

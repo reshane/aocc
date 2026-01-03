@@ -3,7 +3,7 @@
 #define D4_LINES_MAX 200
 #define D4_PTS_MAX 2<<15
 
-void d4_parse_input(char* input, size_t input_sz, StringView* d4_lines, int* d4_ct)
+void d4_parse_input(char *input, size_t input_sz, StringView *d4_lines, int *d4_ct)
 {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
     while (lines(&split)) {
@@ -13,7 +13,7 @@ void d4_parse_input(char* input, size_t input_sz, StringView* d4_lines, int* d4_
     }
 }
 
-long long d4_count(StringView* d4_lines, int d4_ct, Point* d4_pts, int* d4_pts_head)
+long long d4_count(StringView *d4_lines, int d4_ct, Point *d4_pts, int *d4_pts_head)
 {
     for (int l = 0; l < d4_ct; ++l) {
         for (int c = 0; c < d4_lines[l].len; ++c) {
@@ -41,7 +41,7 @@ long long d4_count(StringView* d4_lines, int d4_ct, Point* d4_pts, int* d4_pts_h
 }
 
 // day 4
-long long d4_solve_p1(char* input, size_t input_sz)
+long long d4_solve_p1(char *input, size_t input_sz)
 {
     StringView d4_lines[D4_LINES_MAX] = {0};
     int d4_ct = 0;
@@ -53,7 +53,7 @@ long long d4_solve_p1(char* input, size_t input_sz)
     return d4_count((StringView*)&d4_lines, d4_ct, (Point*)&d4_pts, &d4_pts_head);
 }
 
-long long d4_solve_p2(char* input, size_t input_sz)
+long long d4_solve_p2(char *input, size_t input_sz)
 {
     StringView d4_lines[D4_LINES_MAX] = {0};
     int d4_ct = 0;
@@ -75,7 +75,7 @@ long long d4_solve_p2(char* input, size_t input_sz)
     return total;
 }
 
-void solve_day4(const char* in_file)
+void solve_day4(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;

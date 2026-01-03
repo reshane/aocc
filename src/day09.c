@@ -17,7 +17,7 @@ long long area(Point* p1, Point* p2)
 }
 
 // day 9
-long long d9_solve_p1(char* input, size_t input_sz)
+long long d9_solve_p1(char *input, size_t input_sz)
 {
     static StringView lns[D9_MAX_LNS];
     size_t lns_ct = 0;
@@ -68,14 +68,14 @@ typedef struct p9e {
     long long w;
 } p9e;
 
-int comp_area(const void* a, const void* b)
+int comp_area(const void *a, const void *b)
 {
     p9e ar1 = *(p9e*)a;
     p9e ar2 = *(p9e*)b;
     return comp_ll(ar1.w, ar2.w);
 }
 
-long long d9_solve_p2(char* input, size_t input_sz)
+long long d9_solve_p2(char *input, size_t input_sz)
 {
     static StringView lns[D9_MAX_LNS];
     size_t lns_ct = 0;
@@ -140,7 +140,7 @@ long long d9_solve_p2(char* input, size_t input_sz)
     return -1;
 }
 
-void solve_day9(const char* in_file)
+void solve_day9(const char *in_file)
 {
     char input[BUF_CAP];
     size_t input_sz;
