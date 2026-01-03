@@ -192,7 +192,7 @@ static inline int d10_gcd_row(int *row, size_t len)
 }
 
 
-void reduce(int *matrix, int n, int m)
+void reduce(int *matrix, size_t n, size_t m)
 {
     for (size_t ridx = 0; ridx < n; ++ridx) {
         // find the first non-zero element in the row
@@ -228,7 +228,7 @@ void reduce(int *matrix, int n, int m)
     }
 }
 
-void print_matrix(int *matrix, int n, int m)
+void print_matrix(int *matrix, size_t n, size_t m)
 {
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < m; ++j) {
@@ -238,7 +238,7 @@ void print_matrix(int *matrix, int n, int m)
     }
 }
 
-void calc_bounds(int *matrix, int *bounds, int n, int m)
+void calc_bounds(int *matrix, int *bounds, size_t n, size_t m)
 {
     for (size_t i = 0; i < n; ++i) {
         // this row indicates a boundaries if none are negative
@@ -270,7 +270,7 @@ void calc_bounds(int *matrix, int *bounds, int n, int m)
     }
 }
 
-int check_vals(int *matrix, int *v, int n, int m)
+int check_vals(int *matrix, int *v, size_t n, size_t m)
 {
     int valid = 1;
     for (size_t i = 0; i < n; ++i) {
@@ -323,7 +323,7 @@ int* pop_free(bumper *q)
     return &q->data[q->qh];
 }
 
-int fill_values(int *matrix, int *curr, int n, int m)
+int fill_values(int *matrix, int *curr, size_t n, size_t m)
 {
     for (size_t r = 0; r < n; ++r) {
         int sum_known = 0;
@@ -363,7 +363,7 @@ int fill_values(int *matrix, int *curr, int n, int m)
 
 #define M_MAX 20
 
-long long d10_p2_solve_matrix(int *matrix, int n, int m, int *qdat)
+long long d10_p2_solve_matrix(int *matrix, size_t n, size_t m, int *qdat)
 {
     int bounds[M_MAX] = {0};
     calc_bounds(matrix, bounds, n, m);
@@ -463,7 +463,6 @@ long long d10_solve_p2(char *input, size_t input_sz)
     size_t lvl_ct = 0;
 
     int btns[D10_MAX_BTNS][D10_MAX_JOLTAGES] = {0};
-    size_t btn_cts[D10_MAX_LNS];
     size_t btn_ct = 0;
 
     int *qdat = (int*)malloc(sizeof(int) * V_Q_CAP);
@@ -473,8 +472,6 @@ long long d10_solve_p2(char *input, size_t input_sz)
         assert("lns ran out of space!" && lns_ct < D10_MAX_LNS);
         split_curr(&split, &lns);
         Splitter lnsplit = {.buf = lns.buf, .mx = lns.len};
-        // sv_print(&lns[lns_ct]); printf("\n");
-
 
         delim(&lnsplit, ' ');// skip over the lights
 

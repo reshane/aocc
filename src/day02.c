@@ -5,7 +5,7 @@ int is_invalid(StringView *sv)
     if (sv->len % 2 != 0) return 1;
 
     int i = 0, j = sv->len/2;
-    while (j < sv->len) {
+    while (j < (int)sv->len) {
         if (sv->buf[i] != sv->buf[j]) {
             return 1;
         }
@@ -54,7 +54,7 @@ int repeats_n(StringView *sv, int div)
 {
     StringView control = {.buf = sv->buf, .len = div};
     int s = div;
-    while (s < sv->len) {
+    while (s < (int)sv->len) {
         StringView t = {.buf = sv->buf + s, .len = div};
         if (sv_cmp(&t, &control) != 0) {
             return 1;
