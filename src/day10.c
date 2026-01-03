@@ -45,10 +45,9 @@ void print_bits(uint64_t a)
     printf("\n");
 }
 
-size_t solve_diagram(uint64_t light_bits, uint64_t *btns, size_t btc)
+size_t solve_diagram(qframe *qdat, uint64_t light_bits, uint64_t *btns, size_t btc)
 {
     size_t presses = 0;
-    qframe *qdat = (qframe*)malloc(sizeof(qframe) * D10_Q_CAP);
     // static qframe qdat[D10_Q_CAP];
     d10queue queue = {.data = &qdat[0], .size = 0, .qh = 0, .qb = 0};
     qpush(&queue, (qframe){.data = 0LL, .gen = 0});
@@ -64,14 +63,12 @@ size_t solve_diagram(uint64_t light_bits, uint64_t *btns, size_t btc)
             qpush(&queue, (qframe){.data = curr.data ^ btns[bidx], .gen = curr.gen+1});
         }
     }
-    free(qdat);
     return presses;
 }
 
 // day 10
 long long d10_solve_p1(char *input, size_t input_sz)
 {
-    // StringView *lns = (StringView*)malloc(sizeof(StringView) * D10_MAX_LNS);
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
     // parse [.#] (0,1)...
@@ -132,10 +129,13 @@ long long d10_solve_p1(char *input, size_t input_sz)
         lns_ct++;
     }
 
+    qframe *qdat = (qframe*)malloc(sizeof(qframe) * D10_Q_CAP);
     long long total = 0;
     for (size_t idx = 0; idx < lns_ct; ++idx) {
-        total += solve_diagram(lds[idx], &btns[idx * D10_MAX_LNS], btn_cts[idx]);
+        total += solve_diagram(qdat, lds[idx], &btns[idx * D10_MAX_LNS], btn_cts[idx]);
     }
+    free(qdat);
+    free(btns);
     return total;
 }
 
@@ -457,7 +457,7 @@ long long d10_p2_solve_matrix(int* matrix, int n, int m)
 
 long long d10_solve_p2(char *input, size_t input_sz)
 {
-    StringView *lns = (StringView*)malloc(sizeof(StringView) * D10_MAX_LNS);
+    StringView lns = {0};
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
 
@@ -471,8 +471,8 @@ long long d10_solve_p2(char *input, size_t input_sz)
     long long total = 0;
     while (lines(&split)) {
         assert("lns ran out of space!" && lns_ct < D10_MAX_LNS);
-        split_curr(&split, &lns[lns_ct]);
-        Splitter lnsplit = {.buf = lns[lns_ct].buf, .mx = lns[lns_ct].len};
+        split_curr(&split, &lns);
+        Splitter lnsplit = {.buf = lns.buf, .mx = lns.len};
         // sv_print(&lns[lns_ct]); printf("\n");
 
 
@@ -539,7 +539,6 @@ long long d10_solve_p2(char *input, size_t input_sz)
 
         lns_ct++;
     }
-    free(lns);
     return total;
 }
 
