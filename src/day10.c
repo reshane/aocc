@@ -378,9 +378,6 @@ long long d10_p2_solve_matrix(int *matrix, size_t n, size_t m, int *qdat)
     }
     min = max;
 
-    int known_values[M_MAX] = {0};
-    for (size_t i = 0; i < m - 1; ++i) known_values[i] = -1;
-
     bumper q = {.data = qdat, .qh = 0, .qb = 0, .size = 0};
     int *curr = push_alloc(&q);
     for (size_t x = 0; x < m - 1; ++x) {
@@ -463,7 +460,6 @@ long long d10_solve_p2(char *input, size_t input_sz)
     size_t lvl_ct = 0;
 
     int btns[D10_MAX_BTNS][D10_MAX_JOLTAGES] = {0};
-    size_t btn_ct = 0;
 
     int *qdat = (int*)malloc(sizeof(int) * V_Q_CAP);
 
@@ -527,7 +523,6 @@ long long d10_solve_p2(char *input, size_t input_sz)
 
         // reset the buffers
         lvl_ct = 0;
-        btn_ct = 0;
         for (size_t j=0;j<D10_MAX_JOLTAGES;++j) {
             for (size_t i=0;i<D10_MAX_JOLTAGES;++i) {
                 btns[j][i] = 0;

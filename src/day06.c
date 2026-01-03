@@ -70,7 +70,7 @@ long long d6_solve_p2(char *input, size_t input_sz)
     long long total = 0;
     int args[256] = {0};
     int args_ct = 0;
-    int op;
+    int op = ' ';
     for (size_t idx = 0; idx < lns[lns_ct-1].len; ++idx) {
         int operand = 0;
         if (lns[lns_ct-1].buf[idx] != ' ') {

@@ -26,11 +26,9 @@ long long d3_solve_p1(char *input, size_t input_sz)
                 max = lines[b].buf[i]-48;
             }
         }
-        int sub_max_idx = max_idx+1;
         int sub_max = -1;
         for (int j = max_idx + 1; j < line_len; ++j) {
             if (sub_max < lines[b].buf[j]-48) {
-                sub_max_idx = j;
                 sub_max = lines[b].buf[j]-48;
             }
         }

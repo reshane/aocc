@@ -9,3 +9,10 @@ jobs:
       - name: build everything
         run: |
           ./test
+  build-macos-clang:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build everything
+        run: |
+          ./test
