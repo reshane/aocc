@@ -16,7 +16,7 @@ typedef struct {
 void qpush(d10queue *q, qframe e)
 {
     if (q->size == D10_Q_CAP) {
-        fprintf(stderr, "Could not push to queue, too many elements %d > %d\n", q->size, D10_Q_CAP);
+        fprintf(stderr, "Could not push to queue, too many elements %zu > %d\n", q->size, D10_Q_CAP);
         exit(1);
     }
     q->data[q->qb++] = e;
@@ -40,7 +40,7 @@ qframe qpop(d10queue *q)
 void print_bits(uint64_t a)
 {
     for (int sh = 63; sh > -1; --sh) {
-        printf("%d", ((1<<sh)&a)>>sh);
+        printf("%llu", ((1<<sh)&a)>>sh);
     }
     printf("\n");
 }
@@ -120,7 +120,7 @@ long long d10_solve_p1(char *input, size_t input_sz)
                 StringView bidx = {0};
                 split_curr(&comsplit, &bidx);
                 long long b = sv_atoll(&bidx);
-                btn |= 1 << (l_idx-1) - b;
+                btn |= 1 << ((l_idx-1) - b);
             }
             btns[lns_ct * D10_MAX_LNS + btc] = btn;
             ++btc;
@@ -146,28 +146,28 @@ static inline int d10_fast_gcd(int a, int b)
 {
     assert(a > 0 && b > 0 && "a and b must be positive integers");
     int d = 0;
-    while (a & 1 == 0 && b & 1 == 0) {
-        a >> 1;
-        b >> 1;
+    while ((a & 1) == 0 && (b & 1) == 0) {
+        a >>= 1;
+        b >>= 1;
         ++d;
     }
-    while (a & 1 == 0) {
-        a >> 1;
+    while ((a & 1) == 0) {
+        a >>= 1;
     }
-    while (b & 1 == 0) {
-        b >> 1;
+    while ((b & 1) == 0) {
+        b >>= 1;
     }
     while (a != b) {
         if (a > b) {
             a = a - b;
             do {
-                a >> 1;
-            } while (a & 1 == 0);
+                a >>= 1;
+            } while ((a & 1) == 0);
         } else {
             b = b - a;
             do {
-                b >> 1;
-            } while (b & 1 == 0);
+                b >>= 1;
+            } while ((b & 1) == 0);
         }
     }
     assert(a == b && "a does not equal b??? how are we here");
@@ -300,7 +300,7 @@ typedef struct {
 int* push_alloc(bumper *q)
 {
     if (q->size == (V_Q_CAP/C_CAP)) {
-        fprintf(stderr, "Could not push to queue, too many elements %d > %d\n", 
+        fprintf(stderr, "Could not push to queue, too many elements %zu > %d\n", 
                 q->size, (V_Q_CAP/C_CAP));
         exit(1);
     }
@@ -322,8 +322,6 @@ int* pop_free(bumper *q)
     q->size -= 1;
     return &q->data[q->qh];
 }
-
-int qdata[V_Q_CAP] = {0};
 
 int fill_values(int *matrix, int *curr, int n, int m)
 {
@@ -365,7 +363,7 @@ int fill_values(int *matrix, int *curr, int n, int m)
 
 #define M_MAX 20
 
-long long d10_p2_solve_matrix(int* matrix, int n, int m)
+long long d10_p2_solve_matrix(int *matrix, int n, int m, int *qdat)
 {
     int bounds[M_MAX] = {0};
     calc_bounds(matrix, bounds, n, m);
@@ -383,7 +381,7 @@ long long d10_p2_solve_matrix(int* matrix, int n, int m)
     int known_values[M_MAX] = {0};
     for (size_t i = 0; i < m - 1; ++i) known_values[i] = -1;
 
-    bumper q = {.data = qdata, .qh = 0, .qb = 0, .size = 0};
+    bumper q = {.data = qdat, .qh = 0, .qb = 0, .size = 0};
     int *curr = push_alloc(&q);
     for (size_t x = 0; x < m - 1; ++x) {
         curr[x] = -1;
@@ -468,6 +466,8 @@ long long d10_solve_p2(char *input, size_t input_sz)
     size_t btn_cts[D10_MAX_LNS];
     size_t btn_ct = 0;
 
+    int *qdat = (int*)malloc(sizeof(int) * V_Q_CAP);
+
     long long total = 0;
     while (lines(&split)) {
         assert("lns ran out of space!" && lns_ct < D10_MAX_LNS);
@@ -526,7 +526,7 @@ long long d10_solve_p2(char *input, size_t input_sz)
             aug_matrix[jdx * x + btc] = levels[jdx];
             // printf("[%d]\n", aug_matrix[jdx * x + btc]);
         }
-        total += d10_p2_solve_matrix(aug_matrix, y, x);
+        total += d10_p2_solve_matrix(aug_matrix, y, x, qdat);
 
         // reset the buffers
         lvl_ct = 0;
@@ -539,6 +539,7 @@ long long d10_solve_p2(char *input, size_t input_sz)
 
         lns_ct++;
     }
+    free(qdat);
     return total;
 }
 
