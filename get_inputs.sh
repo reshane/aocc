@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$COOKIE" ]; then
     echo "Error: COOKIE is not set" 1>&2
