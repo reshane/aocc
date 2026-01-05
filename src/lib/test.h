@@ -1,3 +1,6 @@
+#ifndef AOC_TEST_H
+#define AOC_TEST_H
+
 // test helpers
 #define TEST(name) void name()
 #define RUN_TEST(name) printf("\033[1m%s\n\033[0m", #name); name()
@@ -13,3 +16,5 @@
 } else { \
     ASSERT((f1-f2)<(EPSILON)); \
 }
+
+#endif// AOC_TEST_H

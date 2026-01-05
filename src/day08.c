@@ -13,7 +13,7 @@ typedef struct p8e {
     long long d;
 } p8e;
 
-long long p38_dist(p38* p1, p38* p2)
+long long p38_dist(const p38 *p1, const p38 *p2)
 {
     long long dx = p1->x - p2->x;
     long long dy = p1->y - p2->y;
@@ -48,7 +48,7 @@ int comp_szt(const void *sz1, const void *sz2)
 
 
 // day 8
-long long d8p1_solver(char *input, size_t input_sz, size_t iterations)
+long long d8p1_solver(char *input, const size_t input_sz, const size_t iterations)
 {
     static StringView lns[D8_MAX_LNS];
     size_t lns_ct = 0;
@@ -139,12 +139,12 @@ long long d8p1_solver(char *input, size_t input_sz, size_t iterations)
     return total;
 }
 
-long long d8_solve_p1(char *input, size_t input_sz)
+long long d8_solve_p1(char *input, const size_t input_sz)
 {
     return d8p1_solver(input, input_sz, 1000);
 }
 
-long long d8_solve_p2(char *input, size_t input_sz)
+long long d8_solve_p2(char *input, const size_t input_sz)
 {
     static StringView lns[D8_MAX_LNS];
     size_t lns_ct = 0;

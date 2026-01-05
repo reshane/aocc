@@ -5,7 +5,7 @@
 #define MAX(a,b) (a > b ? a : b)
 #define MIN(a,b) (a < b ? a : b)
 
-long long area(Point* p1, Point* p2)
+long long area(const Point *const p1, const Point *const p2)
 {
     long long x1 = MIN(p1->x, p2->x);
     long long x2 = MAX(p1->x, p2->x);
@@ -17,7 +17,7 @@ long long area(Point* p1, Point* p2)
 }
 
 // day 9
-long long d9_solve_p1(char *input, size_t input_sz)
+long long d9_solve_p1(char *input, const size_t input_sz)
 {
     static StringView lns[D9_MAX_LNS];
     size_t lns_ct = 0;
@@ -74,7 +74,7 @@ int comp_area(const void *a, const void *b)
     return comp_ll(ar1.w, ar2.w);
 }
 
-long long d9_solve_p2(char *input, size_t input_sz)
+long long d9_solve_p2(char *input, const size_t input_sz)
 {
     static StringView lns[D9_MAX_LNS];
     size_t lns_ct = 0;

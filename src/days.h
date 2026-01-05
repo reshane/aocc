@@ -1,3 +1,5 @@
+#ifndef DAYS_H
+#define DAYS_H
 
 void solve_day1(const char* in_file);
 void solve_day2(const char* in_file);
@@ -35,4 +37,6 @@ void run_tests()
     day09_tests();
     day10_tests();
 }
-#endif
+#endif // TESTING
+
+#endif // DAYS_H

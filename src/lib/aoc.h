@@ -1,3 +1,6 @@
+#ifndef AOC_H
+#define AOC_H
+
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -164,3 +167,5 @@ size_t Matrix_f_cols(Matrix_f* m);
 void Matrix_f_set(Matrix_f* m, size_t x, size_t y, float e);
 float Matrix_f_get(Matrix_f* m, size_t x, size_t y);
 void Matrix_f_free(Matrix_f* m);
+
+#endif// AOC_H

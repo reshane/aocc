@@ -37,7 +37,7 @@ qframe qpop(d10queue *q)
     return e;
 }
 
-void print_bits(uint64_t a)
+void print_bits(const uint64_t a)
 {
     for (int sh = 63; sh > -1; --sh) {
         printf("%"PRIu64, ((1<<sh)&a)>>sh);
@@ -67,7 +67,7 @@ size_t solve_diagram(qframe *qdat, uint64_t light_bits, uint64_t *btns, size_t b
 }
 
 // day 10
-long long d10_solve_p1(char *input, size_t input_sz)
+long long d10_solve_p1(char *input, const size_t input_sz)
 {
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
@@ -182,7 +182,7 @@ static inline int d10_gcd(int m, int n)
     return d10_fast_gcd((m < 0 ? m * -1 : m), (n < 0 ? n * -1 : n));
 }
 
-static inline int d10_gcd_row(int *row, size_t len)
+static inline int d10_gcd_row(const int *const row, size_t len)
 {
     int prev = row[0];
     for (size_t i = 1; i < len; ++i) {
@@ -192,7 +192,7 @@ static inline int d10_gcd_row(int *row, size_t len)
 }
 
 
-void reduce(int *matrix, size_t n, size_t m)
+void reduce(int *matrix, const size_t n, const size_t m)
 {
     for (size_t ridx = 0; ridx < n; ++ridx) {
         // find the first non-zero element in the row
@@ -228,7 +228,7 @@ void reduce(int *matrix, size_t n, size_t m)
     }
 }
 
-void print_matrix(int *matrix, size_t n, size_t m)
+void print_matrix(const int *matrix, const size_t n, const size_t m)
 {
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < m; ++j) {
@@ -238,7 +238,7 @@ void print_matrix(int *matrix, size_t n, size_t m)
     }
 }
 
-void calc_bounds(int *matrix, int *bounds, size_t n, size_t m)
+void calc_bounds(const int *matrix, int *bounds, const size_t n, const size_t m)
 {
     for (size_t i = 0; i < n; ++i) {
         // this row indicates a boundaries if none are negative
@@ -270,7 +270,7 @@ void calc_bounds(int *matrix, int *bounds, size_t n, size_t m)
     }
 }
 
-int check_vals(int *matrix, int *v, size_t n, size_t m)
+int check_vals(const int *matrix, const int *v, const size_t n, const size_t m)
 {
     int valid = 1;
     for (size_t i = 0; i < n; ++i) {
@@ -323,7 +323,7 @@ int* pop_free(bumper *q)
     return &q->data[q->qh];
 }
 
-int fill_values(int *matrix, int *curr, size_t n, size_t m)
+int fill_values(const int *matrix, int *curr, const size_t n, const size_t m)
 {
     for (size_t r = 0; r < n; ++r) {
         int sum_known = 0;
@@ -363,7 +363,7 @@ int fill_values(int *matrix, int *curr, size_t n, size_t m)
 
 #define M_MAX 20
 
-long long d10_p2_solve_matrix(int *matrix, size_t n, size_t m, int *qdat)
+long long d10_p2_solve_matrix(int *matrix, const size_t n, const size_t m, int *const qdat)
 {
     int bounds[M_MAX] = {0};
     calc_bounds(matrix, bounds, n, m);
@@ -450,7 +450,7 @@ long long d10_p2_solve_matrix(int *matrix, size_t n, size_t m, int *qdat)
     return min;
 }
 
-long long d10_solve_p2(char *input, size_t input_sz)
+long long d10_solve_p2(char *input, const size_t input_sz)
 {
     StringView lns = {0};
     size_t lns_ct = 0;
@@ -567,9 +567,6 @@ TEST(test_day10_part2) {
         "[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}\n"
         "[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}\n"
         "[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}\n";
-        // "[.....#.###] (0,1,2,4,6,7,9) (0,5) (2,4,5,6,8,9) (2,9) (1,4,5,6,7,8,9) (3,4) (0,3,4,6,7,8,9) (0,1,3,4,5,6,7,8) (0,1,3,9) (2,4,5,6,7,9) {43,40,47,26,64,44,57,47,35,82}\n"
-        // "[...#.#.#.] (1,2,3,4,7) (1,4,6,7) (0,1,2,5,6,8) (0,1,2,3,7,8) (0,1,2,3,4,6,8) (1,3,4,5,6) (0,1,3,8) (7,8) (3,5,7) (2,3,4,5,6,7,8) {34,61,47,70,40,42,34,58,45}\n"
-        // "[##.#..#] (1,2,3,6) (2,5) (0,5) (0,1,3,4,5) (0,1,3,6) (1,4,5,6) {8,143,11,7,136,148,143}\n";
     char input[512];
     size_t input_len = 0;
     aoc_fill_input(input_str, (char*)&input, &input_len);
