@@ -1,22 +1,22 @@
 #include "lib/aoc.h"
 
-int is_invalid(StringView *sv)
-{
-    if (sv->len % 2 != 0) return 1;
+int is_invalid(StringView *sv) {
+    if (sv->len % 2 != 0)
+        return 1;
 
-    int i = 0, j = sv->len/2;
+    int i = 0, j = sv->len / 2;
     while (j < (int)sv->len) {
         if (sv->buf[i] != sv->buf[j]) {
             return 1;
         }
-        i++; j++;
+        i++;
+        j++;
     }
     return 0;
 }
 
 // day 2
-long long d2_solve_p1(char *input, size_t input_sz)
-{
+long long d2_solve_p1(char *input, size_t input_sz) {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
     StringView sv = {0};
@@ -50,8 +50,7 @@ long long d2_solve_p1(char *input, size_t input_sz)
     return total;
 }
 
-int repeats_n(StringView *sv, int div)
-{
+int repeats_n(StringView *sv, int div) {
     StringView control = {.buf = sv->buf, .len = div};
     int s = div;
     while (s < (int)sv->len) {
@@ -64,8 +63,7 @@ int repeats_n(StringView *sv, int div)
     return 0;
 }
 
-int is_invalid_2(StringView *sv)
-{
+int is_invalid_2(StringView *sv) {
     int half_len = sv->len / 2;
     for (int i = 1; i <= half_len; ++i) {
         if (sv->len % i == 0 && repeats_n(sv, i) == 0) {
@@ -75,8 +73,7 @@ int is_invalid_2(StringView *sv)
     return 1;
 }
 
-long long d2_solve_p2(char *input, size_t input_sz)
-{
+long long d2_solve_p2(char *input, size_t input_sz) {
     Splitter split = {.buf = input, .st = 0, .sz = 0, .mx = input_sz};
 
     StringView sv = {0};
@@ -110,8 +107,7 @@ long long d2_solve_p2(char *input, size_t input_sz)
     return total;
 }
 
-void solve_day2(const char *in_file)
-{
+void solve_day2(const char *in_file) {
     char input[BUF_CAP];
     size_t input_sz;
     if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
@@ -125,7 +121,8 @@ void solve_day2(const char *in_file)
 #include "lib/test.h"
 
 TEST(test_day2_part1) {
-    char *input_str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
+    char *input_str =
+        "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
         "1698522-1698528,446443-446449,38593856-38593862,565653-565659,\n"
         "824824821-824824827,2121212118-2121212124\n";
     // fill_input(input_str);
@@ -135,10 +132,10 @@ TEST(test_day2_part1) {
 }
 
 TEST(test_day2_sv_trims) {
-    char* t_string = "   \n\t shane\n\t\t  \t";
-    char* a_string = "shane\n\t\t  \t";
-    StringView sv1 = {.buf = t_string, .len = strlen(t_string) };
-    StringView sv2 = {.buf = a_string, .len = strlen(a_string) };
+    char *t_string = "   \n\t shane\n\t\t  \t";
+    char *a_string = "shane\n\t\t  \t";
+    StringView sv1 = {.buf = t_string, .len = strlen(t_string)};
+    StringView sv2 = {.buf = a_string, .len = strlen(a_string)};
     sv_trim_left_whitespace(&sv1);
     ASSERT(sv_cmp(&sv1, &sv2) == 0)
 
@@ -165,7 +162,7 @@ TEST(test_day2_is_invalid) {
     long long t = 565659;
     char buf[64];
     sprintf(buf, "%lld", t);
-    StringView sv1 = {.buf = buf, .len = strlen(buf) };
+    StringView sv1 = {.buf = buf, .len = strlen(buf)};
     long res = is_invalid_2(&sv1);
     // printf("%ld\n", res);
     ASSERT(res != 0);
@@ -188,7 +185,8 @@ TEST(test_day2_is_invalid) {
 }
 
 TEST(test_day2_part2) {
-    char *input_str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
+    char *input_str =
+        "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,\n"
         "1698522-1698528,446443-446449,38593856-38593862,565653-565659,\n"
         "824824821-824824827,2121212118-2121212124\n";
     // fill_input(input_str);
@@ -197,8 +195,7 @@ TEST(test_day2_part2) {
     ASSERT(result == 4174379265)
 }
 
-void day02_tests()
-{
+void day02_tests() {
     RUN_TEST(test_day2_sv_trims);
     RUN_TEST(test_day2_part1);
     RUN_TEST(test_day2_part2);

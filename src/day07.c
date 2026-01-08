@@ -3,8 +3,7 @@
 #define D7_MAX_LNS 256
 
 // day 7
-long long d7_solve_p1(char *input, size_t input_sz)
-{
+long long d7_solve_p1(char *input, size_t input_sz) {
     StringView lns[D7_MAX_LNS];
     size_t lns_ct = 0;
     Splitter split = {.buf = input, .mx = input_sz};
@@ -15,14 +14,15 @@ long long d7_solve_p1(char *input, size_t input_sz)
     long long total = 0;
     for (size_t idx = 2; idx < lns_ct; idx += 2) {
         for (size_t jdx = 0; jdx < lns[idx].len; ++jdx) {
-            if (lns[idx-2].buf[jdx] == '|' || lns[idx-2].buf[jdx] == 'S') {
+            if (lns[idx - 2].buf[jdx] == '|' || lns[idx - 2].buf[jdx] == 'S') {
                 if (lns[idx].buf[jdx] == '^') {
                     total += 1;
-                    if (jdx > 0 && lns[idx].buf[jdx-1] != '^') {
-                        lns[idx].buf[jdx-1] = '|';
+                    if (jdx > 0 && lns[idx].buf[jdx - 1] != '^') {
+                        lns[idx].buf[jdx - 1] = '|';
                     }
-                    if (jdx < lns[idx].len-1 && lns[idx].buf[jdx+1] != '^') {
-                        lns[idx].buf[jdx+1] = '|';
+                    if (jdx < lns[idx].len - 1 &&
+                        lns[idx].buf[jdx + 1] != '^') {
+                        lns[idx].buf[jdx + 1] = '|';
                     }
                 } else {
                     lns[idx].buf[jdx] = '|';
@@ -33,8 +33,7 @@ long long d7_solve_p1(char *input, size_t input_sz)
     return total;
 }
 
-long long d7_solve_p2(char *input, size_t input_sz)
-{
+long long d7_solve_p2(char *input, size_t input_sz) {
     long long weights[D7_MAX_LNS][D7_MAX_LNS];
     StringView lns[D7_MAX_LNS];
     size_t lns_ct = 0;
@@ -56,31 +55,30 @@ long long d7_solve_p2(char *input, size_t input_sz)
 
     for (size_t idx = 2; idx < lns_ct; idx += 2) {
         for (size_t jdx = 0; jdx < lns[idx].len; ++jdx) {
-            if (weights[idx-2][jdx] > 0) {
+            if (weights[idx - 2][jdx] > 0) {
                 if (weights[idx][jdx] == -1) {
-                    if (jdx > 0 && weights[idx][jdx-1] > -1) {
-                        weights[idx][jdx-1] += weights[idx-2][jdx];
+                    if (jdx > 0 && weights[idx][jdx - 1] > -1) {
+                        weights[idx][jdx - 1] += weights[idx - 2][jdx];
                     }
-                    if (jdx < lns[idx].len-1 && weights[idx][jdx+1] > -1) {
-                        weights[idx][jdx+1] += weights[idx-2][jdx];
+                    if (jdx < lns[idx].len - 1 && weights[idx][jdx + 1] > -1) {
+                        weights[idx][jdx + 1] += weights[idx - 2][jdx];
                     }
                 } else {
-                    weights[idx][jdx] += weights[idx-2][jdx];
+                    weights[idx][jdx] += weights[idx - 2][jdx];
                 }
             }
         }
     }
     long long total = 0;
-    for (size_t idx = 0; idx < lns[lns_ct-2].len; ++idx) {
-        if (weights[lns_ct-2][idx] > 0) {
-            total += weights[lns_ct-2][idx];
+    for (size_t idx = 0; idx < lns[lns_ct - 2].len; ++idx) {
+        if (weights[lns_ct - 2][idx] > 0) {
+            total += weights[lns_ct - 2][idx];
         }
     }
     return total;
 }
 
-void solve_day7(const char *in_file)
-{
+void solve_day7(const char *in_file) {
     char input[BUF_CAP];
     size_t input_sz;
     if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
@@ -94,59 +92,56 @@ void solve_day7(const char *in_file)
 #include "lib/test.h"
 
 TEST(test_day7_part1) {
-    char *input_str = 
-        ".......S.......\n"
-        "...............\n"
-        ".......^.......\n"
-        "...............\n"
-        "......^.^......\n"
-        "...............\n"
-        ".....^.^.^.....\n"
-        "...............\n"
-        "....^.^...^....\n"
-        "...............\n"
-        "...^.^...^.^...\n"
-        "...............\n"
-        "..^...^.....^..\n"
-        "...............\n"
-        ".^.^.^.^.^...^.\n"
-        "...............\n";
+    char *input_str = ".......S.......\n"
+                      "...............\n"
+                      ".......^.......\n"
+                      "...............\n"
+                      "......^.^......\n"
+                      "...............\n"
+                      ".....^.^.^.....\n"
+                      "...............\n"
+                      "....^.^...^....\n"
+                      "...............\n"
+                      "...^.^...^.^...\n"
+                      "...............\n"
+                      "..^...^.....^..\n"
+                      "...............\n"
+                      ".^.^.^.^.^...^.\n"
+                      "...............\n";
     char input[512];
     size_t input_len = 0;
-    aoc_fill_input(input_str, (char*)&input, &input_len);
+    aoc_fill_input(input_str, (char *)&input, &input_len);
     long long result = d7_solve_p1(input, input_len);
     // printf("%lld\n", result);
     ASSERT(result == 21)
 }
 
 TEST(test_day7_part2) {
-    char *input_str = 
-        ".......S.......\n"
-        "...............\n"
-        ".......^.......\n"
-        "...............\n"
-        "......^.^......\n"
-        "...............\n"
-        ".....^.^.^.....\n"
-        "...............\n"
-        "....^.^...^....\n"
-        "...............\n"
-        "...^.^...^.^...\n"
-        "...............\n"
-        "..^...^.....^..\n"
-        "...............\n"
-        ".^.^.^.^.^...^.\n"
-        "...............\n";
+    char *input_str = ".......S.......\n"
+                      "...............\n"
+                      ".......^.......\n"
+                      "...............\n"
+                      "......^.^......\n"
+                      "...............\n"
+                      ".....^.^.^.....\n"
+                      "...............\n"
+                      "....^.^...^....\n"
+                      "...............\n"
+                      "...^.^...^.^...\n"
+                      "...............\n"
+                      "..^...^.....^..\n"
+                      "...............\n"
+                      ".^.^.^.^.^...^.\n"
+                      "...............\n";
     char input[512];
     size_t input_len = 0;
-    aoc_fill_input(input_str, (char*)&input, &input_len);
+    aoc_fill_input(input_str, (char *)&input, &input_len);
     long long result = d7_solve_p2(input, input_len);
     // printf("%lld\n", result);
     ASSERT(result == 40)
 }
 
-void day07_tests()
-{
+void day07_tests() {
     RUN_TEST(test_day7_part1);
     RUN_TEST(test_day7_part2);
 }

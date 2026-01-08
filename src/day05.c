@@ -1,7 +1,6 @@
 #include "lib/aoc.h"
 
-Point parse_range(StringView *rng)
-{
+Point parse_range(StringView *rng) {
     Splitter split = {.buf = rng->buf, .st = 0, .sz = 0, .mx = rng->len};
     StringView start_str = {0};
     StringView end_str = {0};
@@ -15,8 +14,7 @@ Point parse_range(StringView *rng)
 }
 
 // day 5
-long long d5_solve_p1(char *input, size_t input_sz)
-{
+long long d5_solve_p1(char *input, size_t input_sz) {
     const int lines_max = 1500;
     StringView lns[1500] = {0};
     int ct = 0;
@@ -55,18 +53,16 @@ long long d5_solve_p1(char *input, size_t input_sz)
     return total;
 }
 
-int comp_pt_x(const void *a, const void *b)
-{
-    if (((Point*)a)->x == ((Point*)b)->x) {
+int comp_pt_x(const void *a, const void *b) {
+    if (((Point *)a)->x == ((Point *)b)->x) {
         return 0;
-    } else if (((Point*)a)->x < ((Point*)b)->x) {
+    } else if (((Point *)a)->x < ((Point *)b)->x) {
         return -1;
     }
     return 1;
 }
 
-long long d5_solve_p2(char *input, size_t input_sz)
-{
+long long d5_solve_p2(char *input, size_t input_sz) {
     const int lines_max = 200;
     StringView lns[200] = {0};
     int ct = 0;
@@ -98,7 +94,8 @@ long long d5_solve_p2(char *input, size_t input_sz)
         // else
         // ranges[++cr_idx] = ranges[i];
         if (ranges[cr_idx].y + 1 < ranges[i].x) {
-            if (++cr_idx != i) ranges[cr_idx] = ranges[i];
+            if (++cr_idx != i)
+                ranges[cr_idx] = ranges[i];
         } else if (ranges[cr_idx].y < ranges[i].y) {
             ranges[cr_idx].y = ranges[i].y;
         }
@@ -112,8 +109,7 @@ long long d5_solve_p2(char *input, size_t input_sz)
     return total;
 }
 
-void solve_day5(const char *in_file)
-{
+void solve_day5(const char *in_file) {
     char input[BUF_CAP];
     size_t input_sz;
     if (aoc_slurp_file(in_file, input, &input_sz) != 0) {
@@ -128,16 +124,16 @@ void solve_day5(const char *in_file)
 
 TEST(test_day5_part1) {
     char *input_str = "3-5\n"
-        "10-14\n"
-        "16-20\n"
-        "12-18\n"
-        "\n"
-        "1\n"
-        "5\n"
-        "8\n"
-        "11\n"
-        "17\n"
-        "32\n";
+                      "10-14\n"
+                      "16-20\n"
+                      "12-18\n"
+                      "\n"
+                      "1\n"
+                      "5\n"
+                      "8\n"
+                      "11\n"
+                      "17\n"
+                      "32\n";
     // aoc_fill_input(input_str);
     long long result = d5_solve_p1(input_str, strlen(input_str));
     // printf("%lld\n", result);
@@ -146,24 +142,23 @@ TEST(test_day5_part1) {
 
 TEST(test_day5_part2) {
     char *input_str = "3-5\n"
-        "10-14\n"
-        "16-20\n"
-        "12-18\n"
-        "\n"
-        "1\n"
-        "5\n"
-        "8\n"
-        "11\n"
-        "17\n"
-        "32\n";
+                      "10-14\n"
+                      "16-20\n"
+                      "12-18\n"
+                      "\n"
+                      "1\n"
+                      "5\n"
+                      "8\n"
+                      "11\n"
+                      "17\n"
+                      "32\n";
     // aoc_fill_input(input_str);
     long long result = d5_solve_p2(input_str, strlen(input_str));
     // printf("%lld\n", result);
     ASSERT(result == 14)
 }
 
-void day05_tests()
-{
+void day05_tests() {
     RUN_TEST(test_day5_part1);
     RUN_TEST(test_day5_part2);
 }
