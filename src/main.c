@@ -2,49 +2,24 @@
 #include "days.h"
 #include "lib/aoc.h"
 
-const char* in_files[11] = {
-    "./inputs/01.txt",
-    "./inputs/02.txt",
-    "./inputs/03.txt",
-    "./inputs/04.txt",
-    "./inputs/05.txt",
-    "./inputs/06.txt",
-    "./inputs/07.txt",
-    "./inputs/08.txt",
-    "./inputs/09.txt",
-    "./inputs/10.txt",
-    "./inputs/11.txt",
+const char* in_files[12] = {
+    "./inputs/01.txt", "./inputs/02.txt", "./inputs/03.txt", "./inputs/04.txt",
+    "./inputs/05.txt", "./inputs/06.txt", "./inputs/07.txt", "./inputs/08.txt",
+    "./inputs/09.txt", "./inputs/10.txt", "./inputs/11.txt", "./inputs/12.txt",
 };
-void (*solutions[11])(const char*) = {
-    solve_day1,
-    solve_day2,
-    solve_day3,
-    solve_day4,
-    solve_day5,
-    solve_day6,
-    solve_day7,
-    solve_day8,
-    solve_day9,
-    solve_day10,
-    solve_day11,
+void (*solutions[12])(const char*) = {
+    solve_day1, solve_day2, solve_day3, solve_day4,  solve_day5,  solve_day6,
+    solve_day7, solve_day8, solve_day9, solve_day10, solve_day11, solve_day12,
 };
 
 #ifdef TESTING
-void (*tests[11])() = {
-    day01_tests,
-    day02_tests,
-    day03_tests,
-    day04_tests,
-    day05_tests,
-    day06_tests,
-    day07_tests,
-    day08_tests,
-    day09_tests,
-    day10_tests,
-    day11_tests,
+void (*tests[12])() = {
+    day01_tests, day02_tests, day03_tests, day04_tests,
+    day05_tests, day06_tests, day07_tests, day08_tests,
+    day09_tests, day10_tests, day11_tests, day12_tests,
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     int last_day = sizeof(tests) / sizeof(tests[0]);
     if (argc > 2) {
         printf("Usage: %s [day ...]\n", argv[0]);
@@ -66,7 +41,7 @@ int main(int argc, char **argv) {
 
 #else
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     int last_day = sizeof(solutions) / sizeof(solutions[0]);
     int day = last_day;
     if (argc > 2) {

@@ -168,4 +168,4 @@ void Matrix_f_set(Matrix_f *m, size_t x, size_t y, float e);
 float Matrix_f_get(Matrix_f *m, size_t x, size_t y);
 void Matrix_f_free(Matrix_f *m);
 
-#endif // AOC_H
+#endif  // AOC_H
